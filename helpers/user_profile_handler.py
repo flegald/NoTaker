@@ -27,5 +27,5 @@ class UserProfileHandler:
         notes = user.profile.notes.all()
         serialized_notes = []
         for note in notes:
-            serialized_notes.append(NoteSerializer(note).data)
+            serialized_notes.append({note.properties.title:NoteSerializer(note).data})
         return serialized_notes

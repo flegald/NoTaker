@@ -5,7 +5,7 @@ class ReqRespHandler:
     # Requests
     def parse_json(self, request):
         try:
-            return json.loads(request.body)
+            return json.loads(request.body.decode("UTF-8"))
         except:
             return {"Error": "Invalid JSON"}
 

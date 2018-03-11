@@ -17,6 +17,9 @@ urlpatterns = [
     # Note
     url(r'^note/create/$', create_note),
 
+    # Reminder
+    url(r'^note/(?P<pk>[0-9]+)/reminder/create$', create_reminder),
+
     # JWT Auth
     url(r'^login/', obtain_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),

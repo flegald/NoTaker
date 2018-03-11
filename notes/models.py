@@ -31,7 +31,7 @@ class Properties(md.Model):
     rank = md.IntegerField(null=True)
     title = md.CharField(max_length=32)
     note = md.OneToOneField(Note, on_delete=md.CASCADE)
-    last_modified_date = md.DateField(auto_now=True)
+    last_modified_date = md.DateTimeField(auto_now=True)
     color = md.CharField(
         max_length=32,
         choices=COLORS,
@@ -47,4 +47,4 @@ class Properties(md.Model):
 class Reminders(md.Model):
     note = md.OneToOneField(Note, on_delete=md.CASCADE)
     name = md.CharField(max_length=32)
-    time = md.DateField(auto_now=False, auto_now_add=False)
+    time = md.DateTimeField(auto_now=False, auto_now_add=False)

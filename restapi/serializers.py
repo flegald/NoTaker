@@ -31,6 +31,13 @@ class ContentsSerializer(serializers.ModelSerializer):
 
         fields = ["note","checked","contents"]
 
+class ReminderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Reminders
+
+        fields = ["note","name","time"]
+
 class NoteSerializer(serializers.ModelSerializer):
     properties = PropertySerializer(many=False)
     contents = ContentsSerializer(many=False)

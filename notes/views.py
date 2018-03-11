@@ -31,3 +31,18 @@ def create_note(request):
 
     note_serialized = NoteSerializer(note).data
     return Response(note_serialized)
+
+@api_view(["POST"])
+def create_reminder(request, pk):
+    nh = NoteHandler()
+    rh = ReqRespHandler()
+
+    note = nh.get_note(pk)
+    if note.user is not request.user:
+        return Response("you suck")
+    reminder_body = rh.parse_json(request)
+
+    reminder = nh.create_note_reminder(note,reminder_body)
+
+    reminder_serialized = ReminderSerializer(reminder).data
+    return Response(reminder_serialized)
