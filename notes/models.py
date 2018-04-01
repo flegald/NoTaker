@@ -8,6 +8,7 @@ class Note(md.Model):
         on_delete=md.CASCADE,
         related_name="notes"
     )
+    is_deleted = md.BooleanField(default=False)
 
 
 class Contents(md.Model):
@@ -29,7 +30,7 @@ class Properties(md.Model):
         ("Times-New-Roman","Times New Roman"),
     )
     rank = md.IntegerField(null=True)
-    title = md.CharField(max_length=32)
+    title = md.CharField(max_length=256)
     note = md.OneToOneField(Note, on_delete=md.CASCADE)
     last_modified_date = md.DateTimeField(auto_now=True)
     color = md.CharField(

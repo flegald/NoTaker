@@ -46,4 +46,4 @@ class NoteSerializer(serializers.ModelSerializer):
 
         model = Note
 
-        fields = [ "properties", "contents"]
+        fields = [ "properties", "contents", "pk", "is_deleted"]
