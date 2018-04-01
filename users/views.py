@@ -45,3 +45,10 @@ def get_user_notes(request):
     user = uph.return_user(request.user)
     notes = uph.return_user_notes(user)
     return Response(notes)
+
+@api_view(["GET"])
+def get_user_deleted_notes(request):
+    uph = UserProfileHandler()
+    user = uph.return_user(request.user)
+    notes = uph.return_user_deleted_notes(user)
+    return Response(notes)

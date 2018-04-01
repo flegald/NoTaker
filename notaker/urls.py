@@ -13,12 +13,16 @@ urlpatterns = [
     url(r'^user/create/$', create_account),
     url(r'^user/get/$', get_user),
     url(r'^user/notes/$', get_user_notes),
+    url(r'^user/notes/deleted/$', get_user_deleted_notes),
+
 
     # Note
     url(r'^note/create/$', create_note),
+    url(r'^note/(?P<pk>[0-9]+)/update/$', update_note),
+    url(r'^note/(?P<pk>[0-9]+)/delete/$', delete_note),
 
     # Reminder
-    url(r'^note/(?P<pk>[0-9]+)/reminder/create$', create_reminder),
+    url(r'^note/(?P<pk>[0-9]+)/reminder/create/$', create_reminder),
 
     # JWT Auth
     url(r'^login/', obtain_jwt_token),

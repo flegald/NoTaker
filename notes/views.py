@@ -15,6 +15,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
+import json
+
 
 @api_view(["POST"])
 def create_note(request):
@@ -38,7 +40,7 @@ def create_reminder(request, pk):
     rh = ReqRespHandler()
 
     note = nh.get_note(pk)
-    if note.user is not request.user:
+    if note.user != request.user.profile:
         return Response("you suck")
     reminder_body = rh.parse_json(request)
 
@@ -46,3 +48,22 @@ def create_reminder(request, pk):
 
     reminder_serialized = ReminderSerializer(reminder).data
     return Response(reminder_serialized)
+
+@api_view(["POST"])
+def delete_note(request,pk):
+    nh = NoteHandler()
+    if nh.delete_note(pk):
+        return Response(json.dumps({"success":True}))
+    return Response(json.dumps({"success":False}))
+
+@api_view(["POST"])
+def update_note(request,pk):
+    nh = NoteHandler()
+    rh = ReqRespHandler()
+
+    note_body = rh.parse_json(request)
+    nh.update_note(note_body,pk)
+
+    note = nh.get_note(pk)
+    note_serialized = NoteSerializer(note).data
+    return Response(note_serialized)
