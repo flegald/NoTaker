@@ -29,7 +29,7 @@ class ContentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contents
 
-        fields = ["note","checked","contents"]
+        fields = ["note", "checked", "contents"]
 
 class ReminderSerializer(serializers.ModelSerializer):
 

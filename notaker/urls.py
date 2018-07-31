@@ -1,13 +1,19 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from django.conf import settings
+from django.conf.urls.static import static
+from notaker.views import *
 from users.views import *
 from notes.views import *
 from rest_framework_jwt.views import obtain_jwt_token,verify_jwt_token
-
+print(settings.STATIC_URL, settings.STATIC_ROOT)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Frontend
+    url(r'^$', home_page),
 
     # User
     url(r'^user/create/$', create_account),
@@ -27,4 +33,4 @@ urlpatterns = [
     # JWT Auth
     url(r'^login/', obtain_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
