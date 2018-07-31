@@ -1,6 +1,13 @@
+# PYTHON
 *.pyc
+venv/*
 bin/*
 include/*
 lib/*
 share/*
 pip-selfcheck.json
+.idea/*
+
+# JAVASCRIPT
+node_modules/*
+assets/bundles/*
