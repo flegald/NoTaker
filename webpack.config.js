@@ -10,6 +10,8 @@ module.exports = {
         path: path.resolve('./assets/bundles/'), 
         filename: '[name]-[hash].js', 
     },
+
+    mode: "development",
     
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}), 
@@ -29,6 +31,13 @@ module.exports = {
                 query: {
                     presets: ['react'] 
                 }
+            },
+            {
+                test: /\.css/,
+                use: [
+                    'style-loader',
+                    "css-loader"
+                ]
             }
         ]
     },

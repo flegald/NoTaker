@@ -1,4 +1,5 @@
 {% load render_bundle from webpack_loader %}
+<!-- {% load static %} -->
 <DOCTYPE! html>
 <head>
 	<title>
@@ -9,6 +10,7 @@
 <body>
 	<div id="container">
 	</div>
+	<!-- <script type="text/javascript" src="{% static 'js/index.js' %}"></script> -->
 	{% render_bundle 'main' %}
 </body>
 
