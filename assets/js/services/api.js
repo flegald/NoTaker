@@ -24,7 +24,7 @@ export class API {
 	getUserSelf(token) {
 		return new Promise ( (resolve, reject) => { 
 			var endpoint = '/user/get';
-			var method = "GET";
+			var method = 'GET';
 			var headers = {
 				"Authorization": `JWT ${token}`
 			};
@@ -37,10 +37,32 @@ export class API {
 			).then(resp => {
 				resolve(resp)
 			}).catch(resp => {
-				reject(resp.responseJSON)
+				reject(resp)
 			})
 		})
 	}
+
+	loginRequest(username, password) {
+			return new Promise ( (resolve, reject) => { 
+				var endpoint = '/login/';
+				var method = 'POST';
+				var headers = null;
+				var body = {
+					'username': username,
+					'password': password
+				};
+				this.hitInternal(
+					endpoint, 
+					method,
+					body,
+					headers
+				).then(resp => {
+					resolve(resp)
+				}).catch(resp => {
+					reject(resp)
+				})
+			})
+		}
 }
 
 
