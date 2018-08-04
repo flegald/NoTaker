@@ -3,20 +3,21 @@ export class API {
 
 		// MAIN CLASS METHOD
 		this.hitInternal = function(endpoint, method, body, headers) {
-			var url = `http://127.0.0.1:8000${endpoint}`;
+			var url = `http://127.0.0.1:8000/api${endpoint}`;
 		    return new Promise( (resolve, reject) => {
 				$.ajax({
 					url: url,
 					type: method,
 					headers: headers,
-					body: body,
+					data: body,
 					success: function(data) {
-						resolve(data)
+						console.log(data)
+						 data
 					},
 					error: function(data) {
 						reject(data)
 					}
-				})
+		   		})
 			})
 	  	}
 	}
@@ -56,9 +57,14 @@ export class API {
 					method,
 					body,
 					headers
-				).then(resp => {
+				)
+				.then(resp => {
+					return resp
+				})
+				.then(resp => {
 					resolve(resp)
-				}).catch(resp => {
+				})
+				.catch(resp => {
 					reject(resp)
 				})
 			})

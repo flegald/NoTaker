@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'corsheaders',
     'webpack_loader',
     'rest_framework',
     'users',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,6 +86,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'notaker.wsgi.application'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database

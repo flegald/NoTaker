@@ -30,12 +30,18 @@ export default class Login extends Component {
 
     api.loginRequest(un, pw)
     .then(data => {
-      if (data.hasOwnProperty('token')) {
-        localStorage.setItem('ntkr.tkn', data['token'])
+      console.log(data.responseJSON)
+      if (data.responseJSON.hasOwnProperty('token')) {
+
+        // Set token to local storage
+        localStorage.setItem('ntkr.tkn', data['token']);
+
+        // Tell parent compopnent APP we are logged in
+        this.props.logIn();
       }
     })
     .catch(data => {
-      console.log(`Error: ${data}`);
+      console.log(data.responseTEXT);
     })
   }
   

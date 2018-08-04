@@ -30,6 +30,12 @@ export default class App extends Component {
     })
   }
 
+  logIn() {
+    this.setState({
+      loggedIn: true
+    })
+  }
+
   componentDidMount () {
       this.checkToken()
   }
@@ -40,7 +46,7 @@ export default class App extends Component {
         {this.state.loggedIn ? 
           <div>Hello</div>
           :
-          < Login />
+          < Login logIn={this.logIn} />
         }
       </div>
     )
