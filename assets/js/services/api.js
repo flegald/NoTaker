@@ -4,6 +4,7 @@ export class API {
 		// MAIN CLASS METHOD
 		this.hitInternal = function(endpoint, method, body, headers) {
 			var url = `http://127.0.0.1:8000/api${endpoint}`;
+				console.log(body);
 		    return new Promise( (resolve, reject) => {
 				$.ajax({
 					url: url,
@@ -12,7 +13,7 @@ export class API {
 					data: body,
 					success: function(data) {
 						console.log(data)
-						 data
+						resolve(data)
 					},
 					error: function(data) {
 						reject(data)
@@ -23,7 +24,7 @@ export class API {
 	}
 
 	getUserSelf(token) {
-		return new Promise ( (resolve, reject) => { 
+		return new Promise ( (resolve, reject) => {
 			var endpoint = '/user/get';
 			var method = 'GET';
 			var headers = {
@@ -31,7 +32,7 @@ export class API {
 			};
 			var body = null;
 			this.hitInternal(
-				endpoint, 
+				endpoint,
 				method,
 				body,
 				headers
@@ -44,7 +45,7 @@ export class API {
 	}
 
 	loginRequest(username, password) {
-			return new Promise ( (resolve, reject) => { 
+			return new Promise ( (resolve, reject) => {
 				var endpoint = '/login/';
 				var method = 'POST';
 				var headers = null;
@@ -53,7 +54,7 @@ export class API {
 					'password': password
 				};
 				this.hitInternal(
-					endpoint, 
+					endpoint,
 					method,
 					body,
 					headers
@@ -69,6 +70,31 @@ export class API {
 				})
 			})
 		}
+
+		createUserRequest(username, password) {
+				return new Promise ( (resolve, reject) => {
+					var endpoint = '/user/create/';
+					var method = 'POST';
+					var headers = null;
+					var body = {
+						'username': username,
+						'password': password
+					};
+					this.hitInternal(
+						endpoint,
+						method,
+						body,
+						headers
+					)
+					.then(resp => {
+						return resp
+					})
+					.then(resp => {
+						resolve(resp)
+					})
+					.catch(resp => {
+						reject(resp)
+					})
+				})
+			}
 }
-
-
