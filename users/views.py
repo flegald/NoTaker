@@ -21,8 +21,7 @@ def create_account(request):
     rh = ReqRespHandler()
     uph = UserProfileHandler()
     jh = JWTHandler()
-
-    account_info = rh.parse_json(request)
+    account_info = request.data
     user = uph.create_user_account(account_info)
     uph.create_user_profile(user)
     token = jh.hand_new_account_token(user)

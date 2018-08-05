@@ -10,6 +10,8 @@ export default class App extends Component {
     this.state = {
       loggedIn: false
     }
+
+    this.logIn = this.logIn.bind(this);
   }
 
   checkToken() {
@@ -30,6 +32,12 @@ export default class App extends Component {
     })
   }
 
+  logIn() {
+    this.setState({
+      loggedIn: true
+    }, function(){console.log(this.state)})
+  }
+
   componentDidMount () {
       this.checkToken()
   }
@@ -37,10 +45,10 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.loggedIn ? 
+        {this.state.loggedIn ?
           <div>Hello</div>
           :
-          < Login />
+          < Login logIn={this.logIn} />
         }
       </div>
     )
