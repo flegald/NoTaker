@@ -11,3 +11,4 @@ pip-selfcheck.json
 # JAVASCRIPT
 node_modules/*
 assets/bundles/*
+webpack-stats.json
