@@ -1,0 +1,7 @@
+.nav-list {
+  list-style: none;
+}
+
+.nav-list > li:hover {
+  cursor: pointer;
+}

@@ -29,14 +29,14 @@ export default class App extends Component {
       }
     })
     .catch(data => {
-      console.log(`Error: ${data}`);
+      console.log(data);
     })
   }
 
   logIn() {
     this.setState({
       loggedIn: true
-    }, function(){console.log(this.state)})
+    })
   }
 
   componentDidMount () {

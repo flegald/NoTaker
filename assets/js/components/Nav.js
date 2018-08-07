@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStickyNote, faClock, faCheck } from '@fortawesome/free-solid-svg-icons'
-
-
-
 import { API } from '../services/api';
 
 export default class Nav extends Component {
@@ -14,22 +10,21 @@ export default class Nav extends Component {
 		this.state = {
 			viewSelected: null,
 			options: [
+				['New Note', 'addNote', 'plus'],
 				['Notes', 'notes', 'sticky-note'],
-				['Reminders', 'remind', 'clock'],
-				['Archived', 'archived', 'check']				
+				['Reminders', 'reminders', 'clock'],
+				['Archived', 'archived', 'check']
 			]
 		}
 	}
-
-
+	
 	generateNav() {
 		return (
-	        <ul>
+	        <ul className="nav-list">
 	        	{this.state.options.map( option => {
 						return (
 							<li>
-								<FontAwesomeIcon icon={option[2]} /> 
-								<p id={option[1]}>{option[0]}</p>
+								<p id={option[1]} onClick={this.props.selectView.bind(this)}> <FontAwesomeIcon icon={option[2]} /> {option[0]}</p>
 							</li>
 						)
 					})
@@ -46,6 +41,3 @@ export default class Nav extends Component {
 	    )
 	  }
 	}
-
-
-
