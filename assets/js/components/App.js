@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { API } from '../services/api';
 import Login from './Login';
+import Main from './Main';
 
 export default class App extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ export default class App extends Component {
     return (
       <div>
         {this.state.loggedIn ?
-          <div>Hello</div>
+          < Main />
           :
           < Login logIn={this.logIn} />
         }
