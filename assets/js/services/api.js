@@ -4,7 +4,6 @@ export class API {
 		// MAIN CLASS METHOD
 		this.hitInternal = function(endpoint, method, body, headers) {
 			var url = `http://127.0.0.1:8000/api${endpoint}`;
-				console.log(body);
 		    return new Promise( (resolve, reject) => {
 				$.ajax({
 					url: url,
@@ -12,7 +11,6 @@ export class API {
 					headers: headers,
 					data: body,
 					success: function(data) {
-						console.log(data)
 						resolve(data)
 					},
 					error: function(data) {
@@ -23,9 +21,31 @@ export class API {
 	  	}
 	}
 
+// User Calls
 	getUserSelf(token) {
 		return new Promise ( (resolve, reject) => {
 			var endpoint = '/user/get';
+			var method = 'GET';
+			var headers = {
+				"Authorization": `JWT ${token}`
+			};
+			var body = null;
+			this.hitInternal(
+				endpoint,
+				method,
+				body,
+				headers
+			).then(resp => {
+				resolve(resp)
+			}).catch(resp => {
+				reject(resp)
+			})
+		})
+	}
+
+	getUserNotes(token) {
+		return new Promise ( (resolve, reject) => {
+			var endpoint = '/user/notes/';
 			var method = 'GET';
 			var headers = {
 				"Authorization": `JWT ${token}`
@@ -49,10 +69,11 @@ export class API {
 				var endpoint = '/login/';
 				var method = 'POST';
 				var headers = null;
-				var body = {
+				var bodyRaw = {
 					'username': username,
 					'password': password
 				};
+				var body = JSON.stringify(bodyRaw);
 				this.hitInternal(
 					endpoint,
 					method,
@@ -71,30 +92,59 @@ export class API {
 			})
 		}
 
-		createUserRequest(username, password) {
-				return new Promise ( (resolve, reject) => {
-					var endpoint = '/user/create/';
-					var method = 'POST';
-					var headers = null;
-					var body = {
-						'username': username,
-						'password': password
-					};
-					this.hitInternal(
-						endpoint,
-						method,
-						body,
-						headers
-					)
-					.then(resp => {
-						return resp
-					})
-					.then(resp => {
-						resolve(resp)
-					})
-					.catch(resp => {
-						reject(resp)
-					})
+	createUserRequest(username, password) {
+			return new Promise ( (resolve, reject) => {
+				var endpoint = '/user/create/';
+				var method = 'POST';
+				var headers = null;
+				var bodyRaw = {
+					'username': username,
+					'password': password
+				};
+				var body = JSON.stringify(bodyRaw);
+				this.hitInternal(
+					endpoint,
+					method,
+					body,
+					headers
+				)
+				.then(resp => {
+					return resp
 				})
-			}
+				.then(resp => {
+					resolve(resp)
+				})
+				.catch(resp => {
+					reject(resp)
+				})
+			})
+		}
+
+// Note Calls
+	createNewNoteRequest(token, noteData) {
+			return new Promise ( (resolve, reject) => {
+				var endpoint = '/note/create/';
+				var method = 'POST';
+				var headers = {
+					"Authorization": `JWT ${token}`,
+					"Content-Type": "application/json"
+				};					
+				var body = JSON.stringify(noteData);
+				this.hitInternal(
+					endpoint,
+					method,
+					body,
+					headers
+				)
+				.then(resp => {
+					return resp
+				})
+				.then(resp => {
+					resolve(resp)
+				})
+				.catch(resp => {
+					reject(resp)
+				})
+			})
+		}
 }

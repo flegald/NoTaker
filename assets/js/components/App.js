@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { API } from '../services/api';
 import Login from './Login';
+import Main from './Main';
 
 export default class App extends Component {
   constructor(props) {
@@ -28,14 +29,14 @@ export default class App extends Component {
       }
     })
     .catch(data => {
-      console.log(`Error: ${data}`);
+      console.log(data);
     })
   }
 
   logIn() {
     this.setState({
       loggedIn: true
-    }, function(){console.log(this.state)})
+    })
   }
 
   componentDidMount () {
@@ -46,7 +47,7 @@ export default class App extends Component {
     return (
       <div>
         {this.state.loggedIn ?
-          <div>Hello</div>
+          < Main />
           :
           < Login logIn={this.logIn} />
         }

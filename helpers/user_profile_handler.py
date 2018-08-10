@@ -26,15 +26,19 @@ class UserProfileHandler:
     def return_user_notes(self, user):
         notes = user.profile.notes.all()
         serialized_notes = []
+        returned_id = 0
         for note in notes:
             if not note.is_deleted:
-                serialized_notes.append({note.properties.title:NoteSerializer(note).data})
+                serialized_notes.append({str(returned_id):NoteSerializer(note).data})
+                returned_id += 1
         return serialized_notes
 
     def return_user_deleted_notes(self, user):
         notes = user.profile.notes.all()
         serialized_notes = []
+        returned_id = 0
         for note in notes:
             if note.is_deleted:
-                serialized_notes.append({note.properties.title:NoteSerializer(note).data})
+                serialized_notes.append({str(returned_id):NoteSerializer(note).data})
+                returned_id += 1
         return serialized_notes

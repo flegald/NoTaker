@@ -1,0 +1,11 @@
+.side-nav, .main-viewer {
+	height: 100%;
+}
+
+.side-nav {
+	background-color: grey;
+}
+
+.main-viewer {
+	background-color: red;
+}
