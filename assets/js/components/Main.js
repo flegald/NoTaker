@@ -3,7 +3,8 @@ import { API } from '../services/api';
 import { Button, Form, FormGroup, Label, Input, FormText, Alert, Container, Row, Col } from 'reactstrap';
 
 import Nav from './Nav';
-import Note from './Note';
+import NoteModal from './NoteModal';
+import NoteCanvas from './NoteCanvas';
 
 export default class Main extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ export default class Main extends Component {
     this.state = {
       viewSelected: null,
       user: null,
-      notes: [],
       noteModalOpen: false
     }
 
@@ -33,11 +33,12 @@ export default class Main extends Component {
           {!addNoteView ?
             null
           :
-          < Note
+          < NoteModal
             isOpen={true}
             toggle={this.toggleModal}
+            pk="new"
             title='New Note'
-            content=" "
+            contents=" "
             color=" "
             reminder=" "
             font=" "
@@ -53,7 +54,7 @@ export default class Main extends Component {
               </Col>
 
               <Col xs="9" className="main-viewer">
-                <p>CAVNAS</p>
+                < NoteCanvas />
               </Col>
 
             </Row>

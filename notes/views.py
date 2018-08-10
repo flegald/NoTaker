@@ -27,7 +27,7 @@ def create_note(request):
     user = uph.return_user(request.user)
     profile = user.profile
     note = nh.create_note(profile)
-    body = rh.parse_json(request)
+    body = request.data
     nh.create_note_contents(note, body["contents"])
     nh.create_note_properties(note, body["properties"])
 
