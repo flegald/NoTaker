@@ -1,3 +1,9 @@
 .note-individual {
-	background: black
+	background: black;
+
 }
+
+.note-individual:hover {
+	cursor: pointer;
+}
+
