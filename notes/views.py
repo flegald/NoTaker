@@ -57,12 +57,12 @@ def delete_note(request,pk):
     return Response(json.dumps({"success":False}))
 
 @api_view(["POST"])
-def update_note(request,pk):
+def update_note(request, pk):
     nh = NoteHandler()
     rh = ReqRespHandler()
 
-    note_body = rh.parse_json(request)
-    nh.update_note(note_body,pk)
+    note_body = request.data
+    nh.update_note(note_body, pk)
 
     note = nh.get_note(pk)
     note_serialized = NoteSerializer(note).data

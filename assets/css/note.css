@@ -1,9 +1,8 @@
 .note-individual {
-	background: black;
+	background: white;
 
 }
 
 .note-individual:hover {
 	cursor: pointer;
 }
-

@@ -128,7 +128,7 @@ export class API {
 				var headers = {
 					"Authorization": `JWT ${token}`,
 					"Content-Type": "application/json"
-				};					
+				};
 				var body = JSON.stringify(noteData);
 				this.hitInternal(
 					endpoint,
@@ -147,4 +147,33 @@ export class API {
 				})
 			})
 		}
+
+		updateExistingNoteRequest(token, noteData, pk) {
+				return new Promise ( (resolve, reject) => {
+					var endpoint = `/note/${pk}/update/`;
+					var method = 'POST';
+					var headers = {
+						"Authorization": `JWT ${token}`,
+						"Content-Type": "application/json"
+					};
+					var body = JSON.stringify(noteData);
+					this.hitInternal(
+						endpoint,
+						method,
+						body,
+						headers
+					)
+					.then(resp => {
+						return resp
+					})
+					.then(resp => {
+						resolve(resp)
+					})
+					.catch(resp => {
+						reject(resp)
+					})
+				})
+			}
+
+
 }

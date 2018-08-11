@@ -10,18 +10,18 @@ export default class Note extends Component {
 		this.state = {
 			pk: this.props.pk,
 			isOpen: this.props.isOpen,
-      		title: this.props.title,
+  		title: this.props.title,
 			contents: this.props.contents,
-      		color: this.props.color,
-      		reminder: this.props.reminder,
-      		font: this.props.font
+  		color: this.props.color,
+  		reminder: this.props.reminder,
+  		font: this.props.font
 		}
 	}
-
 
 	render() {
 		return (
 			<div className="note-individual">
+				<button><i className="fa fa-edit" id={this.state.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
 				<ul>
 					<li>{this.state.title}</li>
 					<li>{this.state.contents}</li>

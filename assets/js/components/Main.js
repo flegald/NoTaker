@@ -21,31 +21,100 @@ export default class Main extends Component {
 
     this.selectView = this.selectView.bind(this);
     this.loadNotes = this.loadNotes.bind(this);
+    this.resetSelectedNote = this.resetSelectedNote.bind(this);
+    this.updateSelectedNote = this.updateSelectedNote.bind(this);
+    this.showUpdateModal = this.showUpdateModal.bind(this);
+
   }
 
   selectView(event) {
     this.setState({
       viewSelected: event.target.id
-    }, function(){console.log(this.state)})
+    })
+  }
+
+  updateSelectedNote(event) {
+    this.setState({
+      selectedNote: event.target.id
+    })
+  }
+
+  resetSelectedNote(){
+    this.setState({
+      selectedNote: null
+    })
+  }
+
+  showUpdateModal() {
+    for (var index=0; index<this.state.notes.length; index++) {
+      var noteNormalized = this.state.notes[index][index.toString()];
+      if (noteNormalized.properties.note.toString() === this.state.selectedNote) {
+        return (
+          < NoteModal
+            isOpen={true}
+            toggle={this.toggleModal}
+            pk={noteNormalized["properties"]["note"]}
+            title={noteNormalized["properties"]["title"]}
+            contents={noteNormalized["contents"]["contents"]}
+            color="red"
+            reminder=" "
+            font=" "
+            selectView={this.selectView}
+            loadNotes={this.loadNotes}
+            resetSelectedNote={this.resetSelectedNote}
+            />
+        )
+      }
+    }
   }
 
   loadNotes() {
+    this.setState({
+      notes:[]
+    })
     var api = new(API);
     var token = localStorage.getItem('ntkr.tkn');
     api.getUserNotes(token)
-      .then(data => {
-        var notes = [];
-        data.map( note => {
-          notes.push(note);
-        })
-        this.setState({
-          notes: notes
-        }, function(){console.log(this.state)})
+    .then(data => {
+      var notes = [];
+      data.map( note => {
+        notes.push(note);
       })
-      .catch(data => {
-        console.log("Error");
-        console.log(data);
-      })  
+      this.setState({
+        notes: notes
+      }, function(){this.forceUpdate();console.log(this.state)})
+    })
+    .catch(data => {
+      console.log("Error");
+      console.log(data);
+    })
+  }
+
+  dumpNotes() {
+    return (
+        <Row>
+          {this.state.notes.map( (note, index) => {
+            var noteNormalized = note[index.toString()];
+            var pk = noteNormalized["properties"]["note"];
+            var divId = "note-" + pk;
+            return (
+            <Col sm={{ size: 'auto', offset: 1 }}>
+                  <div>
+                    < Note
+                      pk={noteNormalized["properties"]["note"]}
+                      title={noteNormalized["properties"]["title"]}
+                      contents={noteNormalized["contents"]["contents"]}
+                      color=" "
+                      reminder=" "
+                      font=" "
+                      updateSelectedNote={this.updateSelectedNote}
+                       />
+                  </div>
+            </Col>
+            )
+          })}
+        </Row>
+    )
   }
 
   componentDidMount() {
@@ -54,6 +123,7 @@ export default class Main extends Component {
 
   render() {
     var addNoteView = (this.state.viewSelected == "addNote");
+    var updateNoteView = (this.state.selectedNote != null);
 
     return (
       <div>
@@ -70,9 +140,19 @@ export default class Main extends Component {
             reminder=" "
             font=" "
             selectView={this.selectView}
-            loadNotes={this.loadNotes} />
-
+            loadNotes={this.loadNotes}
+            resetSelectedNote={this.resetSelectedNote}
+            />
           }
+
+          {!updateNoteView ?
+            null
+          :
+            this.showUpdateModal()
+          }
+
+
+
           <Container>
 
             <Row>
@@ -83,29 +163,9 @@ export default class Main extends Component {
 
               <Col xs="9" className="main-viewer">
                 <div>
-                <Container>
-                  <Row>
-                  {this.state.notes.map( (note, index) => {
-                    var noteNormalized = note[index.toString()];
-                    var pk = noteNormalized["properties"]["note"];
-                    var divId = "note-" + pk;
-                    return (
-                    <Col sm={{ size: 'auto', offset: 1 }}>
-                          <div className="editNote" id={divId}>
-                            < Note
-                              pk={noteNormalized["contents"]["pk"]}
-                              title={noteNormalized["properties"]["title"]}
-                              contents={noteNormalized["contents"]["contents"]}
-                              color=" "
-                              reminder=" "
-                              font=" "
-                               />
-                          </div>
-                    </Col>
-                    )
-                  })}
-                  </Row>
-                </Container>
+                  <Container>
+                    {this.dumpNotes()}
+                  </Container>
                 </div>
               </Col>
 
