@@ -44,6 +44,8 @@ export default class NoteModal extends Component {
   		if (this.state.pk == "new") {
   			this.saveNewNote()
   		}
+  		this.props.loadNotes();
+		this.closeModal();
   	}
 
 	saveNewNote() {
