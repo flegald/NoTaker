@@ -1,11 +1,17 @@
+.main-viewer {
+	width: 100% !important;
+	margin-left: 0 !important;
+	max-width: none !important;
+}
+
 .side-nav, .main-viewer {
 	height: 100%;
 }
 
 .side-nav {
-	background-color: grey;
+	background-color: #E8E8E8;
 }
 
 .main-viewer {
-	background-color: red;
+	background-color: #bfbdbd;
 }

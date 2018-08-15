@@ -1,8 +1,18 @@
 .note-individual {
 	background: white;
+	box-shadow: 9px 7px 5px 0px #afaeae;
+	width: 300px;
 
 }
 
 .note-individual:hover {
 	cursor: pointer;
+}
+
+.note-contents {
+	list-style: none;
+}
+
+.note-title {
+	font-weight: bold;
 }

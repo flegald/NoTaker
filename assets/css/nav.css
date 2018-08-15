@@ -1,7 +1,9 @@
 .nav-list {
   list-style: none;
+  padding: 0 !important;
 }
 
-.nav-list > li:hover {
+.nav-item:hover {
+  background-color: #bfbdbd;
   cursor: pointer;
 }

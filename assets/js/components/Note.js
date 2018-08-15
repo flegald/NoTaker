@@ -22,8 +22,8 @@ export default class Note extends Component {
 		return (
 			<div className="note-individual">
 				<button><i className="fa fa-edit" id={this.state.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
-				<ul>
-					<li>{this.state.title}</li>
+				<ul className="note-contents">
+					<li><span className="note-title">{this.state.title}</span></li>
 					<li>{this.state.contents}</li>
 				</ul>
 			</div>

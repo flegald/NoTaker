@@ -17,13 +17,13 @@ export default class Nav extends Component {
 			]
 		}
 	}
-	
+
 	generateNav() {
 		return (
 	        <ul className="nav-list">
 	        	{this.state.options.map( option => {
 						return (
-							<li>
+							<li className="nav-item">
 								<p id={option[1]} onClick={this.props.selectView.bind(this)}> <FontAwesomeIcon icon={option[2]} /> {option[0]}</p>
 							</li>
 						)

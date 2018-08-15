@@ -113,7 +113,7 @@ export default class NoteModal extends Component {
 
 		        <ModalBody>
 							<FormGroup>
-								<Input type="textArea" id="contents" placeholder={this.state.contents} onChange={this.handleChange}/>
+								<Input type="textArea" id="contents" value={this.state.contents} onChange={this.handleChange}/>
 							</FormGroup>
 		        </ModalBody>
 

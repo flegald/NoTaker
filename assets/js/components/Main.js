@@ -153,7 +153,7 @@ export default class Main extends Component {
 
 
 
-          <Container>
+          <Container className="main-viewer">
 
             <Row>
 
@@ -161,7 +161,7 @@ export default class Main extends Component {
                 < Nav selectView={this.selectView}/>
               </Col>
 
-              <Col xs="9" className="main-viewer">
+              <Col>
                 <div>
                   <Container>
                     {this.dumpNotes()}

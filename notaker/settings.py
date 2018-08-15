@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'webpack_loader',
     'rest_framework',
+    'controllers',
     'users',
-    'notes',
-    'helpers',
+    'notes'
 ]
 
 MIDDLEWARE = [
@@ -145,7 +145,7 @@ STATIC_URL = "/assets/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'), 
+    os.path.join(BASE_DIR, 'assets'),
 )
 
 WEBPACK_LOADER = {
