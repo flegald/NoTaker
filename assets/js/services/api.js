@@ -68,7 +68,9 @@ export class API {
 			return new Promise ( (resolve, reject) => {
 				var endpoint = '/login/';
 				var method = 'POST';
-				var headers = null;
+				var headers = {
+					'Content-Type': 'application/json'
+				};
 				var bodyRaw = {
 					'username': username,
 					'password': password
@@ -96,7 +98,9 @@ export class API {
 			return new Promise ( (resolve, reject) => {
 				var endpoint = '/user/create/';
 				var method = 'POST';
-				var headers = null;
+				var headers = {
+					'Content-Type': 'application/json'
+				};
 				var bodyRaw = {
 					'username': username,
 					'password': password

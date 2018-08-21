@@ -5,6 +5,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Alert, Container, Row,
 import Nav from './Nav';
 import NoteModal from './NoteModal';
 import Note from './Note';
+import TopBar from './TopBar';
 
 export default class Main extends Component {
   constructor(props) {
@@ -155,6 +156,9 @@ export default class Main extends Component {
 
           <Container className="main-viewer">
 
+          < TopBar />
+
+
             <Row>
 
               <Col xs="3" className="side-nav">
@@ -162,7 +166,7 @@ export default class Main extends Component {
               </Col>
 
               <Col>
-                <div>
+                <div className="nav-container">
                   <Container>
                     {this.dumpNotes()}
                   </Container>

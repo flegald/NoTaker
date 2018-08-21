@@ -31,6 +31,13 @@ def create_account(request):
     return Response(resp, status=status.HTTP_201_CREATED)
 
 
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes([AllowAny,])
+def tester(request):
+    import pdb; pdb.set_trace()
+    return Response({"response": "thug"}, status=status.HTTP_201_CREATED)
+
 @api_view(["GET"])
 def get_user(request):
     uph = UserProfileController()

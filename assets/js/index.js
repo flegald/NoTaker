@@ -8,6 +8,7 @@ import '../css/main.css';
 import '../css/login.css';
 import '../css/nav.css';
 import '../css/note.css';
+import '../css/topbar.css';
 
 // Load font awesome icons
 library.add(faStickyNote, faClock, faCheck, faPlus, faEdit);

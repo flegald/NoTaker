@@ -1,3 +1,7 @@
+.nav-container {
+	padding-top: 20px;
+}
+
 .nav-list {
   list-style: none;
   padding: 0 !important;

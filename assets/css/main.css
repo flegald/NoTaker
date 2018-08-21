@@ -2,6 +2,7 @@
 	width: 100% !important;
 	margin-left: 0 !important;
 	max-width: none !important;
+	padding: 0 !important;
 }
 
 .side-nav, .main-viewer {
@@ -10,6 +11,8 @@
 
 .side-nav {
 	background-color: #E8E8E8;
+    padding-top: 20px;
+    padding-left: 40px;
 }
 
 .main-viewer {

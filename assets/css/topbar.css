@@ -1,0 +1,19 @@
+.topbar {
+	width: 100%;
+}
+
+.navbar {
+	background-color: #2B40D7 !important;
+}
+
+.navbar-brand {
+	color: #E7E7E7 !important;
+}
+
+.logout {
+	color: #E7E7E7 !important;
+}
+
+.logout:hover {
+	background-color: #626fd1 !important;
+}

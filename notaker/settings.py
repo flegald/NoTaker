@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'webpack_loader',
     'rest_framework',
-    'controllers',
     'users',
     'notes'
 ]

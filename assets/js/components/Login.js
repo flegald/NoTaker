@@ -90,7 +90,7 @@ export default class Login extends Component {
         :
           null
         }
-      	<Form className='loginForm'>
+      	<form className='loginForm'>
 
       		<FormGroup>
 
@@ -121,7 +121,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
     				/>
 
-			   </FormGroup>
+         </FormGroup>
          <div className='loginButts'>
             <Button
               outline
@@ -131,6 +131,7 @@ export default class Login extends Component {
               Login
             </Button>
 
+        </div>
             <Button
               outline
               color='success'
@@ -138,9 +139,8 @@ export default class Login extends Component {
             >
               Sign Up
             </Button>
-        </div>
+      </form>
 
-      </Form>
 
       </div>
     )
