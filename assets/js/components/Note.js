@@ -10,12 +10,20 @@ export default class Note extends Component {
 		this.state = {
 			pk: this.props.pk,
 			isOpen: this.props.isOpen,
-  		title: this.props.title,
+	  		title: this.props.title,
 			contents: this.props.contents,
-  		color: this.props.color,
-  		reminder: this.props.reminder,
-  		font: this.props.font
+	  		color: this.props.color,
+	  		reminder: this.props.reminder,
+	  		font: this.props.font
 		}
+
+		this.renderHTML = this.renderHTML.bind(this);
+	}
+
+	renderHTML() {
+		var html = {__html: this.state.contents}
+		console.log(html);
+		return html
 	}
 
 	render() {
@@ -24,7 +32,7 @@ export default class Note extends Component {
 				<button><i className="fa fa-edit" id={this.state.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
 				<ul className="note-contents">
 					<li><span className="note-title">{this.state.title}</span></li>
-					<li>{this.state.contents}</li>
+					<li dangerouslySetInnerHTML={this.renderHTML()}></li>
 				</ul>
 			</div>
 		)
