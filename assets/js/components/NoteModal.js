@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactQuill from 'react-quill';
+
 import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API } from '../services/api';
@@ -10,16 +12,17 @@ export default class NoteModal extends Component {
 		this.state = {
 			pk: this.props.pk,
 			isOpen: this.props.isOpen,
-  		title: this.props.title,
+	  		title: this.props.title,
 			contents: this.props.contents,
-  		color: this.props.color,
-  		reminder: this.props.reminder,
-  		font: this.props.font
+	  		color: this.props.color,
+	  		reminder: this.props.reminder,
+	  		font: this.props.font
 		}
 
 		this.closeModal = this.closeModal.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleChangeQuill = this.handleChangeQuill.bind(this);
 		this.saveNewNote = this.saveNewNote.bind(this);
 	}
 
@@ -41,13 +44,19 @@ export default class NoteModal extends Component {
 	    });
   	}
 
+  	handleChangeQuill(value) {
+  		this.setState({
+  			contents: value
+  		}, function(){console.log(this.state)})
+  	}
+
   	handleSubmit() {
   		if (this.state.pk == "new") {
   			this.saveNewNote();
   		} else {
-				this.updateExistingNote();
-			}
-			this.closeModal();
+			this.updateExistingNote();
+		}
+		this.closeModal();
   	}
 
 	saveNewNote() {
@@ -65,40 +74,40 @@ export default class NoteModal extends Component {
 				"font": "New-Times-Roman"
 			}
 		};
-		api.createNewNoteRequest(token, data)
+	api.createNewNoteRequest(token, data)
     .then(data => {
-      console.log(data["responseJSON"])
-			this.props.loadNotes();
+		console.log(data["responseJSON"])
+		this.props.loadNotes();
     })
     .catch(data => {
-      console.log(data['responseJSON']);
+		console.log(data['responseJSON']);
     })
 	  }
 
-		updateExistingNote() {
-			var api = new(API);
-			var token = localStorage.getItem('ntkr.tkn');
-			var data = {
-				"contents": {
-					"contents": this.state.contents,
-					"checked": false
-				},
-				"properties": {
-					"rank": 1,
-					"title": this.state.title,
-					"color": "red",
-					"font": "New-Times-Roman"
-				}
-			};
-			api.updateExistingNoteRequest(token, data, this.state.pk.toString())
-			.then(data => {
-	      console.log(data)
-				this.props.loadNotes();
-	    })
-	    .catch(data => {
-	      console.log(data['responseJSON']);
-	    })
+	updateExistingNote() {
+		var api = new(API);
+		var token = localStorage.getItem('ntkr.tkn');
+		var data = {
+			"contents": {
+				"contents": this.state.contents,
+				"checked": false
+		},
+			"properties": {
+				"rank": 1,
+				"title": this.state.title,
+				"color": "red",
+				"font": "New-Times-Roman"
 		}
+	};
+	api.updateExistingNoteRequest(token, data, this.state.pk.toString())
+	.then(data => {
+	console.log(data)
+	this.props.loadNotes();
+	})
+	.catch(data => {
+	console.log(data['responseJSON']);
+	})
+	}
 
     render() {
       return (
@@ -113,7 +122,7 @@ export default class NoteModal extends Component {
 
 		        <ModalBody>
 							<FormGroup>
-								<Input type="textArea" id="contents" value={this.state.contents} onChange={this.handleChange}/>
+								 <ReactQuill value={this.state.contents} onChange={this.handleChangeQuill} />
 							</FormGroup>
 		        </ModalBody>
 

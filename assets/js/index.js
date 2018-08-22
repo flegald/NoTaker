@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStickyNote, faClock, faCheck, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
 import App from './components/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-quill/dist/quill.snow.css';
 import '../css/main.css';
 import '../css/login.css';
 import '../css/nav.css';
