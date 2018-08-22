@@ -74,15 +74,15 @@ export default class NoteModal extends Component {
 				"font": "New-Times-Roman"
 			}
 		};
-	api.createNewNoteRequest(token, data)
-    .then(data => {
-		console.log(data["responseJSON"])
-		this.props.loadNotes();
-    })
-    .catch(data => {
-		console.log(data['responseJSON']);
-    })
-	  }
+		api.createNewNoteRequest(token, data)
+	    .then(data => {
+			console.log(data["responseJSON"])
+			this.props.loadNotes();
+	    })
+	    .catch(data => {
+			console.log(data['responseJSON']);
+	    })
+	}
 
 	updateExistingNote() {
 		var api = new(API);
@@ -91,22 +91,22 @@ export default class NoteModal extends Component {
 			"contents": {
 				"contents": this.state.contents,
 				"checked": false
-		},
+			},
 			"properties": {
 				"rank": 1,
 				"title": this.state.title,
 				"color": "red",
 				"font": "New-Times-Roman"
-		}
-	};
-	api.updateExistingNoteRequest(token, data, this.state.pk.toString())
-	.then(data => {
-	console.log(data)
-	this.props.loadNotes();
-	})
-	.catch(data => {
-	console.log(data['responseJSON']);
-	})
+			}
+		};
+		api.updateExistingNoteRequest(token, data, this.state.pk.toString())
+		.then(data => {
+			console.log(data)
+			this.props.loadNotes();
+		})
+		.catch(data => {
+			console.log(data['responseJSON']);
+		})
 	}
 
     render() {
@@ -122,7 +122,11 @@ export default class NoteModal extends Component {
 
 		        <ModalBody>
 							<FormGroup>
-								 <ReactQuill value={this.state.contents} onChange={this.handleChangeQuill} />
+								 <ReactQuill 
+								 value={this.state.contents} 
+								 onChange={this.handleChangeQuill} 
+								 style={{height: "150px", marginBottom: "20px"}} 
+								 />
 							</FormGroup>
 		        </ModalBody>
 

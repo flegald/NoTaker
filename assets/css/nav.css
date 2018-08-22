@@ -7,7 +7,17 @@
   padding: 0 !important;
 }
 
+.nav-item {
+	padding: 0px !important;
+}
+
 .nav-item:hover {
   background-color: #bfbdbd;
   cursor: pointer;
+}
+
+.nav-select {
+	margin: 0px;
+	height: 50px;
+	padding-top: 18px;
 }

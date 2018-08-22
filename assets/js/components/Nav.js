@@ -24,7 +24,7 @@ export default class Nav extends Component {
 	        	{this.state.options.map( option => {
 						return (
 							<li className="nav-item">
-								<p id={option[1]} onClick={this.props.selectView.bind(this)}> <FontAwesomeIcon icon={option[2]} /> {option[0]}</p>
+								<p id={option[1]} className='nav-select' onClick={this.props.selectView.bind(this)}> <FontAwesomeIcon icon={option[2]} /> {option[0]}</p>
 							</li>
 						)
 					})
