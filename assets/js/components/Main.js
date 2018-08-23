@@ -109,6 +109,7 @@ export default class Main extends Component {
                       reminder=" "
                       font=" "
                       updateSelectedNote={this.updateSelectedNote}
+                      loadNotes={this.loadNotes}
                        />
                   </div>
             </Col>
@@ -161,7 +162,7 @@ export default class Main extends Component {
 
             <Row>
 
-              <Col xs="3" className="side-nav">
+              <Col xs="2" className="side-nav">
                 < Nav selectView={this.selectView}/>
               </Col>
 

@@ -23,7 +23,6 @@ export default class Note extends Component {
 
 	renderHTML() {
 		var html = {__html: this.state.contents}
-		console.log(html);
 		return html
 	}
 
@@ -32,9 +31,16 @@ export default class Note extends Component {
 			<div className="note-individual">
 				<ul className="note-contents">
 					<li><span className="note-title">{this.state.title}</span></li>
+					<li>
+						<div className="note-spacer"></div>
+					</li>
 					<li dangerouslySetInnerHTML={this.renderHTML()}></li>
 				</ul>
-				< NoteOptions pk={this.state.pk} updateSelectedNote={this.props.updateSelectedNote} />
+				< NoteOptions 
+				pk={this.state.pk} 
+				updateSelectedNote={this.props.updateSelectedNote}
+				loadNotes={this.props.loadNotes} 
+				/>
 			</div>
 		)
 

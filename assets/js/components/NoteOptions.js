@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { API } from '../services/api';
 const classNames = require('classnames');
 
 export default class NoteOptions extends Component {
@@ -8,41 +9,34 @@ export default class NoteOptions extends Component {
 		super(props);
 
 		this.state = {
-			mouseOn: true
 		}
 
-		this.enableOptions = this.enableOptions.bind(this);
-		this.disableOptions = this.disableOptions.bind(this);
+
 	}
 
-	enableOptions() {
-		this.setState({
-			mouseOn: true
-		}, function(){console.log(this.state)})
-	}
-
-	disableOptions() {
-		this.setState({
-			mouseOn: false
-		}, function(){console.log(this.state)})	
+	deleteNote(event) {
+		var api = new(API);
+		var token = localStorage.getItem('ntkr.tkn');
+		var id = event.target.id;
+		var pk = id.replace('remove-', '');
+		console.log(pk);
+		api.deleteExistingNoteRequest(token, pk)
+	    .then(data => {
+			console.log(data["responseJSON"])
+			this.props.loadNotes();
+	    })
+	    .catch(data => {
+			console.log(data['responseJSON']);
+	    })
 	}
 
 	render(){
-
-	    var classes = classNames({
-	      'note-options-main': true,
-	      'note-options-hidden': this.state.mouseOn == false,
-	      'note-options-visible': this.state.mouseOn
-
-	    });
+		var removalId = `remove-${this.props.pk.toString()}`;
 
 		return (
-			<div 
-				className='note-options-main' 
-				onMouseEnter={this.enableOptions} 
-				onMouseLeave={this.disableOptions}
-			>
-				<button><i className="fa fa-edit" id={this.props.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
+			<div className='note-options-main' >
+				<i className="fa fa-edit fa-2x" id={this.props.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i>
+				<i className="fa fa-trash fa-2x" id={removalId} onClick={this.deleteNote.bind(this)}></i>
 			</div>
 		)
 	}

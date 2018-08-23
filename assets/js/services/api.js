@@ -179,5 +179,30 @@ export class API {
 				})
 			}
 
+		deleteExistingNoteRequest(token, pk) {
+				return new Promise ( (resolve, reject) => {
+					var endpoint = `/note/${pk}/delete/`;
+					var method = 'POST';
+					var headers = {
+						"Authorization": `JWT ${token}`,
+					};
+					this.hitInternal(
+						endpoint,
+						method,
+						null,
+						headers
+					)
+					.then(resp => {
+						return resp
+					})
+					.then(resp => {
+						resolve(resp)
+					})
+					.catch(resp => {
+						reject(resp)
+					})
+				})
+			}
+
 
 }

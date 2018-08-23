@@ -44,7 +44,7 @@ def create_reminder(request, pk):
 
 
 @api_view(["POST"])
-def delete_note(request,pk):
+def delete_note(request, pk):
     nh = NoteController()
     if nh.delete_note(pk):
         return Response(json.dumps({"success":True}))

@@ -3,17 +3,29 @@
 	box-shadow: 9px 7px 5px 0px #afaeae;
 	width: 300px;
 	margin-top: 20px;
+	border-radius: 10px;
+	transition: all ease 0.8s;
 
 }
 
 .note-individual:hover {
-	cursor: pointer;
+	box-shadow: 9px 7px 5px 0px #3042D3;
 }
 
 .note-contents {
 	list-style: none;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
 }
 
 .note-title {
 	font-weight: bold;
+	font-size: 30;
+}
+
+.note-spacer {
+	width: 100%;
+	height: 2px;
+	background-color: #bebcbc;
+	margin-bottom: 10px;
 }
