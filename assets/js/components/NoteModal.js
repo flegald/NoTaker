@@ -14,7 +14,7 @@ export default class NoteModal extends Component {
 			isOpen: this.props.isOpen,
 	  		title: this.props.title,
 			contents: this.props.contents,
-	  		color: this.props.color,
+	  		color: this.props.noteColor,
 	  		reminder: this.props.reminder,
 	  		font: this.props.font
 		}
@@ -47,7 +47,7 @@ export default class NoteModal extends Component {
   	handleChangeQuill(value) {
   		this.setState({
   			contents: value
-  		}, function(){console.log(this.state)})
+  		})
   	}
 
   	handleSubmit() {
@@ -58,31 +58,6 @@ export default class NoteModal extends Component {
 		}
 		this.closeModal();
   	}
-
-	saveNewNote() {
-		var api = new(API);
-		var token = localStorage.getItem('ntkr.tkn');
-		var data = {
-			"contents": {
-				"contents": this.state.contents,
-				"checked": false
-			},
-			"properties": {
-				"rank": 1,
-				"title": this.state.title,
-				"color": "red",
-				"font": "New-Times-Roman"
-			}
-		};
-		api.createNewNoteRequest(token, data)
-	    .then(data => {
-			console.log(data["responseJSON"])
-			this.props.loadNotes();
-	    })
-	    .catch(data => {
-			console.log(data['responseJSON']);
-	    })
-	}
 
 	updateExistingNote() {
 		var api = new(API);
@@ -95,18 +70,42 @@ export default class NoteModal extends Component {
 			"properties": {
 				"rank": 1,
 				"title": this.state.title,
-				"color": "red",
 				"font": "New-Times-Roman"
 			}
 		};
+		console.log(data);
 		api.updateExistingNoteRequest(token, data, this.state.pk.toString())
 		.then(data => {
-			console.log(data)
 			this.props.loadNotes();
 		})
 		.catch(data => {
 			console.log(data['responseJSON']);
 		})
+	}
+
+	saveNewNote() {
+		var api = new(API);
+		var token = localStorage.getItem('ntkr.tkn');
+		var data = {
+			"contents": {
+				"contents": this.state.contents,
+				"checked": false
+			},
+			"properties": {
+				"rank": 1,
+				"title": this.state.title,
+				"color": "#FFFFFF",
+				"font": "New-Times-Roman"
+			}
+		};
+		api.createNewNoteRequest(token, data)
+	    .then(data => {
+			console.log(data["responseJSON"])
+			this.props.loadNotes();
+	    })
+	    .catch(data => {
+			console.log(data['responseJSON']);
+	    })
 	}
 
     render() {

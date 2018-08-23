@@ -57,7 +57,7 @@ export default class Main extends Component {
             pk={noteNormalized["properties"]["note"]}
             title={noteNormalized["properties"]["title"]}
             contents={noteNormalized["contents"]["contents"]}
-            color="red"
+            noteColor={noteNormalized["properties"]["color"]}
             reminder=" "
             font=" "
             selectView={this.selectView}
@@ -69,55 +69,55 @@ export default class Main extends Component {
     }
   }
 
-  loadNotes() {
-    this.setState({
-      notes:[]
-    })
-    var api = new(API);
-    var token = localStorage.getItem('ntkr.tkn');
-    api.getUserNotes(token)
-    .then(data => {
-      var notes = [];
-      data.map( note => {
-        notes.push(note);
-      })
-      this.setState({
-        notes: notes
-      }, function(){this.forceUpdate();console.log(this.state)})
-    })
-    .catch(data => {
-      console.log("Error");
-      console.log(data);
-    })
-  }
+    loadNotes() {
+        this.setState({
+            notes:[]
+        })
+        var api = new(API);
+        var token = localStorage.getItem('ntkr.tkn');
+        api.getUserNotes(token)
+        .then(data => {
+            var notes = [];
+            data.map( note => {
+                notes.push(note);
+            })
+            this.setState({
+                notes: notes
+            }, function(){this.forceUpdate();console.log(this.state)})
+        })
+        .catch(data => {
+            console.log("Error");
+            console.log(data);
+        })
+    }
 
-  dumpNotes() {
-    return (
+    dumpNotes() {
+        return (
         <Row>
-          {this.state.notes.map( (note, index) => {
+            {this.state.notes.map( (note, index) => {
             var noteNormalized = note[index.toString()];
             var pk = noteNormalized["properties"]["note"];
             var divId = "note-" + pk;
             return (
-            <Col sm={{ size: 'auto', offset: 1 }}>
-                  <div>
+                <Col sm={{ size: 'auto' }}>
+                <div>
                     < Note
-                      pk={noteNormalized["properties"]["note"]}
-                      title={noteNormalized["properties"]["title"]}
-                      contents={noteNormalized["contents"]["contents"]}
-                      color=" "
-                      reminder=" "
-                      font=" "
-                      updateSelectedNote={this.updateSelectedNote}
-                      loadNotes={this.loadNotes}
-                       />
-                  </div>
-            </Col>
+                    pk={noteNormalized["properties"]["note"]}
+                    title={noteNormalized["properties"]["title"]}
+                    contents={noteNormalized["contents"]["contents"]}
+                    noteColor={noteNormalized["properties"]["color"]}
+                    reminder=" "
+                    font=" "
+                    updateSelectedNote={this.updateSelectedNote}
+                    loadNotes={this.loadNotes}
+                    />
+                </div>
+                </Col>
             )
-          })}
+            })}
         </Row>
-    )
-  }
+        )
+    }
 
   componentDidMount() {
     this.loadNotes();
