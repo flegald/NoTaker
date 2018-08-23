@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API } from '../services/api';
+import NoteOptions from './NoteOptions'
 
 export default class Note extends Component {
 	constructor(props) {
@@ -29,11 +30,11 @@ export default class Note extends Component {
 	render() {
 		return (
 			<div className="note-individual">
-				<button><i className="fa fa-edit" id={this.state.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
 				<ul className="note-contents">
 					<li><span className="note-title">{this.state.title}</span></li>
 					<li dangerouslySetInnerHTML={this.renderHTML()}></li>
 				</ul>
+				< NoteOptions pk={this.state.pk} updateSelectedNote={this.props.updateSelectedNote} />
 			</div>
 		)
 

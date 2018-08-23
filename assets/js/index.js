@@ -11,6 +11,7 @@ import '../css/nav.css';
 import '../css/note.css';
 import '../css/topbar.css';
 import '../css/notemodal.css';
+import '../css/noteoptions.css';
 
 // Load font awesome icons
 library.add(faStickyNote, faClock, faCheck, faPlus, faEdit);

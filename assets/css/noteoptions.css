@@ -1,0 +1,8 @@
+.note-options-main {
+  opacity: 0;
+  transition: all ease 0.8s;
+}
+
+.note-options-main:hover {
+  opacity: 1;
+}
