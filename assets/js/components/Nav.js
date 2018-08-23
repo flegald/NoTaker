@@ -12,8 +12,8 @@ export default class Nav extends Component {
 			options: [
 				['New Note', 'addNote', 'plus'],
 				['Notes', 'notes', 'sticky-note'],
-				['Reminders', 'reminders', 'clock'],
-				['Archived', 'archived', 'check']
+				['Completed', 'completed', 'check'],
+				['Deleted', 'deleted', 'trash']
 			]
 		}
 	}

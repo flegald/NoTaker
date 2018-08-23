@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { API } from '../services/api';
+import { CirclePicker } from 'react-color';
 const classNames = require('classnames');
 
 export default class NoteOptions extends Component {
@@ -8,41 +10,35 @@ export default class NoteOptions extends Component {
 		super(props);
 
 		this.state = {
-			mouseOn: true
+			popoverOpen: false
 		}
 
-		this.enableOptions = this.enableOptions.bind(this);
-		this.disableOptions = this.disableOptions.bind(this);
+		this.togglePopover = this.togglePopover.bind(this);
+
 	}
 
-	enableOptions() {
+	togglePopover() {
 		this.setState({
-			mouseOn: true
-		}, function(){console.log(this.state)})
-	}
-
-	disableOptions() {
-		this.setState({
-			mouseOn: false
-		}, function(){console.log(this.state)})	
+			popoverOpen: !this.state.popoverOpen
+		})
 	}
 
 	render(){
-
-	    var classes = classNames({
-	      'note-options-main': true,
-	      'note-options-hidden': this.state.mouseOn == false,
-	      'note-options-visible': this.state.mouseOn
-
-	    });
+		var removalId = `remove-${this.props.pk.toString()}`;
 
 		return (
-			<div 
-				className='note-options-main' 
-				onMouseEnter={this.enableOptions} 
-				onMouseLeave={this.disableOptions}
-			>
-				<button><i className="fa fa-edit" id={this.props.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i></button>
+			<div className='note-options-main' >
+				<i className="fa fa-paint-brush fa-2x" id="color-edit" onClick={this.togglePopover}></i>
+		        <Popover placement="bottom" isOpen={this.state.popoverOpen} target="color-edit" toggle={this.togglePopover}>
+		          <PopoverBody>
+		          	<CirclePicker
+		          	onChange={this.props.updateExistingNote} 
+		          	onSwatchHover={this.props.updateColor.bind(this)} 
+		          	/>
+		          </PopoverBody>
+		        </Popover>
+				<i className="fa fa-edit fa-2x" id={this.props.pk.toString()} onClick={this.props.updateSelectedNote.bind(this)}></i>
+				<i className="fa fa-trash fa-2x" id={removalId} onClick={this.props.deleteNote.bind(this)}></i>
 			</div>
 		)
 	}

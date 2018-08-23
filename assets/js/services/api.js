@@ -64,6 +64,27 @@ export class API {
 		})
 	}
 
+	getUserDeletedNotes(token) {
+		return new Promise ( (resolve, reject) => {
+			var endpoint = '/user/notes/deleted/';
+			var method = 'GET';
+			var headers = {
+				"Authorization": `JWT ${token}`
+			};
+			var body = null;
+			this.hitInternal(
+				endpoint,
+				method,
+				body,
+				headers
+			).then(resp => {
+				resolve(resp)
+			}).catch(resp => {
+				reject(resp)
+			})
+		})
+	}
+
 	loginRequest(username, password) {
 			return new Promise ( (resolve, reject) => {
 				var endpoint = '/login/';
@@ -165,6 +186,31 @@ export class API {
 						endpoint,
 						method,
 						body,
+						headers
+					)
+					.then(resp => {
+						return resp
+					})
+					.then(resp => {
+						resolve(resp)
+					})
+					.catch(resp => {
+						reject(resp)
+					})
+				})
+			}
+
+		deleteExistingNoteRequest(token, pk) {
+				return new Promise ( (resolve, reject) => {
+					var endpoint = `/note/${pk}/delete/`;
+					var method = 'POST';
+					var headers = {
+						"Authorization": `JWT ${token}`,
+					};
+					this.hitInternal(
+						endpoint,
+						method,
+						null,
 						headers
 					)
 					.then(resp => {
