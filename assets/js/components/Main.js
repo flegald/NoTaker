@@ -12,7 +12,7 @@ export default class Main extends Component {
     super(props);
 
     this.state = {
-      viewSelected: null,
+      viewSelected: 'notes',
       selectedNote: null,
       user: null,
       noteModalOpen: false,
@@ -83,7 +83,30 @@ export default class Main extends Component {
             })
             this.setState({
                 notes: notes
-            }, function(){this.forceUpdate();console.log(this.state)})
+            }, function(){this.forceUpdate()})
+        })
+        .catch(data => {
+            console.log("Error");
+            console.log(data);
+        })
+        return this.dumpNotes()
+    }
+
+    loadDeletedNotes() {
+        this.setState({
+            notes:[]
+        })
+        var api = new(API);
+        var token = localStorage.getItem('ntkr.tkn');
+        api.getUserDeletedNotes(token)
+        .then(data => {
+            var notes = [];
+            data.map( note => {
+                notes.push(note);
+            })
+            this.setState({
+                notes: notes
+            }, function(){this.forceUpdate()})
         })
         .catch(data => {
             console.log("Error");
@@ -91,37 +114,47 @@ export default class Main extends Component {
         })
     }
 
+
     dumpNotes() {
         return (
-        <Row>
-            {this.state.notes.map( (note, index) => {
-            var noteNormalized = note[index.toString()];
-            var pk = noteNormalized["properties"]["note"];
-            var divId = "note-" + pk;
-            return (
-                <Col sm={{ size: 'auto' }}>
-                <div>
-                    < Note
-                    pk={noteNormalized["properties"]["note"]}
-                    title={noteNormalized["properties"]["title"]}
-                    contents={noteNormalized["contents"]["contents"]}
-                    noteColor={noteNormalized["properties"]["color"]}
-                    reminder=" "
-                    font=" "
-                    updateSelectedNote={this.updateSelectedNote}
-                    loadNotes={this.loadNotes}
-                    />
-                </div>
-                </Col>
-            )
-            })}
-        </Row>
+          <Row>
+              {this.state.notes.map( (note, index) => {
+                var noteNormalized = note[index.toString()];
+                var pk = noteNormalized["properties"]["note"];
+                var divId = "note-" + pk;
+                return (
+                    <Col sm={{ size: 'auto' }}>
+                    <div>
+                        < Note
+                        pk={noteNormalized["properties"]["note"]}
+                        title={noteNormalized["properties"]["title"]}
+                        contents={noteNormalized["contents"]["contents"]}
+                        noteColor={noteNormalized["properties"]["color"]}
+                        reminder=" "
+                        font=" "
+                        updateSelectedNote={this.updateSelectedNote}
+                        loadNotes={this.loadNotes}
+                        />
+                    </div>
+                  </Col>
+              )
+              })}
+          </Row>
         )
     }
 
   componentDidMount() {
     this.loadNotes();
   }
+
+componentWillUpdate(nextProps, nextState) {
+  if (nextState.viewSelected == "deleted" && this.state.viewSelected != "deleted") {
+    this.loadDeletedNotes();
+  }
+  if (nextState.viewSelected == 'notes' && this.state.viewSelected != 'notes') {
+    this.loadNotes();
+  }
+}
 
   render() {
     var addNoteView = (this.state.viewSelected == "addNote");

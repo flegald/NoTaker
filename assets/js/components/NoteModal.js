@@ -73,7 +73,6 @@ export default class NoteModal extends Component {
 				"font": "New-Times-Roman"
 			}
 		};
-		console.log(data);
 		api.updateExistingNoteRequest(token, data, this.state.pk.toString())
 		.then(data => {
 			this.props.loadNotes();

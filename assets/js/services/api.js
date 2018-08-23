@@ -64,6 +64,27 @@ export class API {
 		})
 	}
 
+	getUserDeletedNotes(token) {
+		return new Promise ( (resolve, reject) => {
+			var endpoint = '/user/notes/deleted/';
+			var method = 'GET';
+			var headers = {
+				"Authorization": `JWT ${token}`
+			};
+			var body = null;
+			this.hitInternal(
+				endpoint,
+				method,
+				body,
+				headers
+			).then(resp => {
+				resolve(resp)
+			}).catch(resp => {
+				reject(resp)
+			})
+		})
+	}
+
 	loginRequest(username, password) {
 			return new Promise ( (resolve, reject) => {
 				var endpoint = '/login/';
