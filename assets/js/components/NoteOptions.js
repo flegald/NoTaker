@@ -23,13 +23,24 @@ export default class NoteOptions extends Component {
 		})
 	}
 
+	componentWillUpdate(nextProps, nextState) {
+		if (!nextState.popoverOpen && this.state.popoverOpen) {
+			console.log(this.state)
+			console.log(nextState)
+			var fakeColorObj = {'hex': this.props.noteColor};
+			var fakeEvent = {};
+			this.props.updateColor(fakeColorObj, fakeEvent);
+		}
+	}
+
 	render(){
 		var removalId = `remove-${this.props.pk.toString()}`;
+		var colorId = `color-edit-${this.props.pk.toString()}`;
 
 		return (
 			<div className='note-options-main' >
-				<i className="fa fa-paint-brush fa-2x" id="color-edit" onClick={this.togglePopover}></i>
-		        <Popover placement="bottom" isOpen={this.state.popoverOpen} target="color-edit" toggle={this.togglePopover}>
+				<i className="fa fa-paint-brush fa-2x" id={colorId} onClick={this.togglePopover}></i>
+		        <Popover placement="bottom" isOpen={this.state.popoverOpen} target={colorId} toggle={this.togglePopover}>
 		          <PopoverBody>
 		          	<CirclePicker
 		          	onChange={this.props.updateExistingNote} 

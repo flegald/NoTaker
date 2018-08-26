@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Alert, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API } from '../services/api';
 import NoteOptions from './NoteOptions'
@@ -14,6 +14,7 @@ export default class Note extends Component {
 	  		title: this.props.title,
 			contents: this.props.contents,
 	  		noteColor: this.props.noteColor,
+	  		noteColorPreview: this.props.noteColor,
 	  		reminder: this.props.reminder,
 	  		font: this.props.font
 		}
@@ -30,7 +31,7 @@ export default class Note extends Component {
 
 	updateColor(color, event) {
 		this.setState({
-			noteColor: color.hex
+			noteColorPreview: color.hex
 		})
 	}
 
@@ -45,7 +46,7 @@ export default class Note extends Component {
 			"properties": {
 				"rank": 1,
 				"title": this.state.title,
-				"color": this.state.noteColor,
+				"color": this.state.noteColorPreview,
 				"font": "New-Times-Roman"
 			}
 		};
@@ -74,24 +75,28 @@ export default class Note extends Component {
 	    })
 	}
 
-	componentDidMount(){
-		console.log(this.state)
-	}
-
 	render() {
-		var noteColor = {backgroundColor: this.state.noteColor};
-
+		var noteColor = {backgroundColor: this.state.noteColorPreview};
 
 		return (
 			<div className="note-individual" style={noteColor}>
 				<ul className="note-contents">
-					<li><span className="note-title">{this.state.title}</span></li>
+					<li>
+						<Container>
+						<Row>
+							<Col xs="10">
+								<span className="note-title">{this.state.title}</span>
+							</Col>
+						</Row>
+						</Container>
+					</li>
 					<li>
 						<div className="note-spacer"></div>
 					</li>
 					<li dangerouslySetInnerHTML={this.renderHTML()}></li>
 				</ul>
 				< NoteOptions 
+				noteColor={this.state.noteColor} 
 				pk={this.state.pk} 
 				updateSelectedNote={this.props.updateSelectedNote}
 				loadNotes={this.props.loadNotes} 
