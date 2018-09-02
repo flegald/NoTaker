@@ -25,15 +25,16 @@ def create_note(request):
     body = request.data
     nh.create_note_contents(note, body["contents"])
     nh.create_note_properties(note, body["properties"])
-
     note_serialized = NoteSerializer(note).data
     return Response(note_serialized)
 
+def check_permissions(note,request):
+    allowed = (note.user.user == request.user)
+    return allowed
 
 @api_view(["POST"])
 def create_reminder(request, pk):
     nh = NoteController()
-
     note = nh.get_note(pk)
     if note.user != request.user.profile:
         return Response("Note Note Found")
@@ -43,21 +44,24 @@ def create_reminder(request, pk):
     return Response(reminder_serialized)
 
 
-@api_view(["POST"])
+@api_view(["POST"]) # make sure that the note being deleted belongs to the user doing the deletion - maybe new note controller class?
 def delete_note(request, pk):
-    nh = NoteController()
-    if nh.delete_note(pk):
-        return Response(json.dumps({"success":True}))
+    #import pdb; pdb.set_trace()
+    nh = NoteController() #note handler
+    if check_permissions(nh.get_note(pk),request) :
+        if nh.delete_note(pk):
+            return Response(json.dumps({"success":True}))
     return Response(json.dumps({"success":False}))
-
 
 @api_view(["POST"])
 def update_note(request, pk):
     nh = NoteController()
-
     note_body = request.data
-    nh.update_note(note_body, pk)
-
-    note = nh.get_note(pk)
-    note_serialized = NoteSerializer(note).data
-    return Response(note_serialized)
+    if check_permissions(nh.get_note(pk),request):
+        nh.update_note(note_body, pk)
+        note = nh.get_note(pk) # don't return note contents if not permitted
+        note_serialized = NoteSerializer(note).data
+        response = Response(note_serialized)
+    else:
+        response = Response(json.dumps({"success":False}))
+    return response
