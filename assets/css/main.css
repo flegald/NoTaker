@@ -1,8 +1,16 @@
+body {
+	background-color: #bebcbc;
+}
+
 .main-viewer {
 	width: 100% !important;
 	margin-left: 0 !important;
 	max-width: none !important;
 	padding: 0 !important;
+}
+
+.main-row {
+	height: 100%;
 }
 
 .side-nav, .main-viewer {

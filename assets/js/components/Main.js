@@ -193,7 +193,7 @@ componentWillUpdate(nextProps, nextState) {
           < TopBar />
 
 
-            <Row>
+            <Row className="main-row">
 
               <Col xs="2" className="side-nav">
                 < Nav selectView={this.selectView}/>
