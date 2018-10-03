@@ -9,6 +9,8 @@ class UserProfileController:
     def create_user_account(self, account_info):
         username = account_info["username"]
         password = account_info["password"]
+        if User.objects.filter(username=username):
+            return False
         new_user = User.objects.create_user(username=username, password=password)
         new_user.save()
         return new_user
@@ -20,8 +22,10 @@ class UserProfileController:
         prof.save()
 
     def return_user(self, user):
-        user = User.objects.get(pk=user.pk)
-        return user
+        try:
+            return User.objects.get(pk=user.pk)
+        except:
+            return False
 
     def return_user_notes(self, user):
         notes = user.profile.notes.all()

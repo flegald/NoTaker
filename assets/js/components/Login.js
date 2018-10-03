@@ -82,7 +82,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login">
         {this.state.incorrect ?
           <Alert color="danger">
             Username or Password Incorrect
@@ -122,23 +122,28 @@ export default class Login extends Component {
     				/>
 
          </FormGroup>
-         <div className='loginButts'>
-            <Button
-              outline
-              color='primary'
-              onClick={this.sendLoginRequest}
-            >
-              Login
-            </Button>
 
-        </div>
-            <Button
-              outline
-              color='success'
-              onClick={this.sendCreateUserRequest}
-            >
-              Sign Up
-            </Button>
+
+         <ul className='loginButts'>
+           <li>
+              <Button
+                outline
+                color='primary'
+                onClick={this.sendLoginRequest}
+              >
+                Login
+              </Button>
+            </li>
+            <li>
+              <Button
+                outline
+                color='success'
+                onClick={this.sendCreateUserRequest}
+              >
+                Sign Up
+              </Button>
+            </li>
+        </ul>
       </form>
 
 

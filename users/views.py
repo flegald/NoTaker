@@ -24,26 +24,20 @@ def create_account(request):
     jh = JWTController()
     account_info = json.loads(request.body.decode("utf-8"))
     user = uph.create_user_account(account_info)
+    if not user:
+        return Response({"error": "username_exists"}, content_type="application/json")
     uph.create_user_profile(user)
     token = jh.hand_new_account_token(user)
     resp = {"username": user.username,
             "token": token}
-    return Response(resp, status=status.HTTP_201_CREATED)
-
-
-@csrf_exempt
-@api_view(["POST"])
-@permission_classes([AllowAny,])
-def tester(request):
-    import pdb; pdb.set_trace()
-    return Response({"response": "thug"}, status=status.HTTP_201_CREATED)
+    return Response(resp, content_type="application/json")
 
 @api_view(["GET"])
 def get_user(request):
     uph = UserProfileController()
     user = uph.return_user(request.user)
     user_serialized = UserSerializer(user).data
-    return Response(user_serialized)
+    return Response(user_serialized, content_type="application/json")
 
 
 @api_view(["GET"])
@@ -51,7 +45,7 @@ def get_user_notes(request):
     uph = UserProfileController()
     user = uph.return_user(request.user)
     notes = uph.return_user_notes(user)
-    return Response(notes)
+    return Response(notes, content_type="application/json")
 
 
 @api_view(["GET"])
@@ -59,4 +53,4 @@ def get_user_deleted_notes(request):
     uph = UserProfileController()
     user = uph.return_user(request.user)
     notes = uph.return_user_deleted_notes(user)
-    return Response(notes)
+    return Response(notes, content_type="application/json")

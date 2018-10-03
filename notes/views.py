@@ -26,7 +26,7 @@ def create_note(request):
     nh.create_note_contents(note, body["contents"])
     nh.create_note_properties(note, body["properties"])
     note_serialized = NoteSerializer(note).data
-    return Response(note_serialized)
+    return Response(note_serialized, content_type="application/json")
 
 def check_permissions(note,request):
     allowed = (note.user.user == request.user)
@@ -37,31 +37,35 @@ def create_reminder(request, pk):
     nh = NoteController()
     note = nh.get_note(pk)
     if note.user != request.user.profile:
-        return Response("Note Note Found")
+        return Response({"error": "invalid_note_id"}, content_type="application/json")
     reminder_body = request.data
     reminder = nh.create_note_reminder(note, reminder_body)
     reminder_serialized = ReminderSerializer(reminder).data
-    return Response(reminder_serialized)
+    return Response(reminder_serialized, content_type="application/json")
 
 
-@api_view(["POST"]) # make sure that the note being deleted belongs to the user doing the deletion - maybe new note controller class?
+@api_view(["POST"])
 def delete_note(request, pk):
-    #import pdb; pdb.set_trace()
-    nh = NoteController() #note handler
-    if check_permissions(nh.get_note(pk),request) :
+    nh = NoteController()
+    note = nh.get_note(pk)
+    if not note:
+        return Response({"error": "invalid_note_id"}, content_type="application/json")
+    if check_permissions(note, request) :
         if nh.delete_note(pk):
-            return Response(json.dumps({"success":True}))
-    return Response(json.dumps({"success":False}))
+            return Response({"success": "deleted"}, content_type="application/json")
+    return Response({"error": "unknown_error"}, content_type="application/json")
 
 @api_view(["POST"])
 def update_note(request, pk):
     nh = NoteController()
     note_body = request.data
+    note = nh.get_note(pk)
+    if not note:
+        return Response({"error": "invalid_note_id"}, content_type="application/json")
     if check_permissions(nh.get_note(pk),request):
         nh.update_note(note_body, pk)
-        note = nh.get_note(pk) # don't return note contents if not permitted
         note_serialized = NoteSerializer(note).data
-        response = Response(note_serialized)
+        response = Response(note_serialized, content_type="application/json")
     else:
-        response = Response(json.dumps({"success":False}))
+        response = Response({"error": "invalid_arguments_or_permissions"}, content_type="application/json")
     return response

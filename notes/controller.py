@@ -48,8 +48,11 @@ class NoteController:
         reminder.save()
         return reminder
 
-    def get_note(self, pk): # security?
-        return Note.objects.get(pk=pk)
+    def get_note(self, pk):
+        try:
+            return Note.objects.get(pk=pk)
+        except:
+            return False
 
     def delete_note(self, pk):
         note = self.get_note(pk)
