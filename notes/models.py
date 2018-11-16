@@ -9,6 +9,7 @@ class Note(md.Model):
         related_name="notes"
     )
     is_deleted = md.BooleanField(default=False)
+    is_completed = md.BooleanField(default=False)
 
 
 class Contents(md.Model):
@@ -19,15 +20,15 @@ class Contents(md.Model):
 
 class Properties(md.Model):
     COLORS = (
-        ("Red","Red"),
-        ("Blue","Blue"),
-        ("Green","Green"),
+        ("Red", "Red"),
+        ("Blue", "Blue"),
+        ("Green", "Green"),
     )
     FONTS = (
-        ("Helvetica","Helvetica"),
-        ("Comic-Sans","Comic Sans"),
-        ("Papyrus","Papyrus"),
-        ("Times-New-Roman","Times New Roman"),
+        ("Helvetica", "Helvetica"),
+        ("Comic-Sans", "Comic Sans"),
+        ("Papyrus", "Papyrus"),
+        ("Times-New-Roman", "Times New Roman"),
     )
     rank = md.IntegerField(null=True)
     title = md.CharField(max_length=256)

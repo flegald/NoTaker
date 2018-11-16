@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { API } from '../services/api';
-import Login from './Login';
-import Main from './Main';
+import React, { Component } from "react";
+import { API } from "../services/api";
+import Login from "./Login";
+import Main from "./Main";
 
 export default class App extends Component {
   constructor(props) {
@@ -10,48 +10,43 @@ export default class App extends Component {
 
     this.state = {
       loggedIn: false
-    }
+    };
 
     this.logIn = this.logIn.bind(this);
   }
 
   checkToken() {
-    var api = new(API)
-  	var loggedIn = false;
-  	var token = localStorage.getItem('ntkr.tkn');
+    var api = new API();
+    var loggedIn = false;
+    var token = localStorage.getItem("ntkr.tkn");
 
-    api.getUserSelf(token)
-    .then(data => {
-      if (data.hasOwnProperty("username")) {
-        this.setState({
-          loggedIn: true
-        })
-      }
-    })
-    .catch(data => {
-      console.log(data);
-    })
+    api
+      .getUserSelf(token)
+      .then(data => {
+        if (data.hasOwnProperty("username")) {
+          this.setState({
+            loggedIn: true
+          });
+        }
+      })
+      .catch(data => {
+        console.log(data);
+      });
   }
 
   logIn() {
     this.setState({
       loggedIn: true
-    })
+    });
   }
 
-  componentDidMount () {
-      this.checkToken()
+  componentDidMount() {
+    this.checkToken();
   }
 
   render() {
     return (
-      <div>
-        {this.state.loggedIn ?
-          < Main />
-          :
-          < Login logIn={this.logIn} />
-        }
-      </div>
-    )
+      <div>{this.state.loggedIn ? <Main /> : <Login logIn={this.logIn} />}</div>
+    );
   }
 }

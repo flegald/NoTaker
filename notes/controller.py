@@ -1,5 +1,4 @@
 from notes.models import *
-from django.contrib.auth.models import User
 import datetime
 
 
@@ -43,7 +42,7 @@ class NoteController:
                 reminder.name = contents_reminder["name"]
             if key.lower() == "time":
                 date_format = "%Y %m %d %H:%M"
-                date_object = datetime.datetime.strptime(contents_reminder["time"],date_format)
+                date_object = datetime.datetime.strptime(contents_reminder["time"], date_format)
                 reminder.time = date_object
         reminder.save()
         return reminder
@@ -55,10 +54,24 @@ class NoteController:
             return False
 
     def delete_note(self, pk):
-        note = self.get_note(pk)
-        note.is_deleted = True
-        note.save()
-        return True
+        success = True
+        try:
+            note = self.get_note(pk)
+            note.is_deleted = True
+            note.save()
+        except:
+            success = False
+        return success
+
+    def complete_note(self, pk):
+        success = True
+        try:
+            note = self.get_note(pk)
+            note.is_completed = True
+            note.save()
+        except:
+            success = False
+        return success
 
     def update_note_contents(self, note, contents_body):
         contents = note.contents
@@ -84,6 +97,6 @@ class NoteController:
 
     def update_note(self, note_body, pk):
         note = self.get_note(pk)
-        self.update_note_contents(note,note_body["contents"])
-        self.update_note_properties(note,note_body["properties"])
+        self.update_note_contents(note, note_body["contents"])
+        self.update_note_properties(note, note_body["properties"])
         return note

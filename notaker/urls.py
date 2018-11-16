@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from notaker.views import *
 from users.views import *
 from notes.views import *
-from rest_framework_jwt.views import obtain_jwt_token,verify_jwt_token
-print(settings.STATIC_URL, settings.STATIC_ROOT)
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,12 +19,14 @@ urlpatterns = [
     url(r'^api/user/get/$', get_user),
     url(r'^api/user/notes/$', get_user_notes),
     url(r'^api/user/notes/deleted/$', get_user_deleted_notes),
+    url(r'^api/user/notes/completed/$', get_user_completed_notes),
 
 
     # Note
     url(r'^api/note/create/$', create_note),
     url(r'^api/note/(?P<pk>[0-9]+)/update/$', update_note),
     url(r'^api/note/(?P<pk>[0-9]+)/delete/$', delete_note),
+    url(r'^api/note/(?P<pk>[0-9]+)/complete/$', complete_note),
 
     # Reminder
     url(r'^api/note/(?P<pk>[0-9]+)/reminder/create/$', create_reminder),

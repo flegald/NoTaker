@@ -32,6 +32,7 @@ def create_account(request):
             "token": token}
     return Response(resp, content_type="application/json")
 
+
 @api_view(["GET"])
 def get_user(request):
     uph = UserProfileController()
@@ -53,4 +54,12 @@ def get_user_deleted_notes(request):
     uph = UserProfileController()
     user = uph.return_user(request.user)
     notes = uph.return_user_deleted_notes(user)
+    return Response(notes, content_type="application/json")
+
+
+@api_view(["GET"])
+def get_user_completed_notes(request):
+    uph = UserProfileController()
+    user = uph.return_user(request.user)
+    notes = uph.return_user_completed_notes(user)
     return Response(notes, content_type="application/json")
