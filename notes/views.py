@@ -1,19 +1,12 @@
-import json
-# DJANGO
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
 # controllers
-from users.JWT_controller import JWTController
 from users.user_profile_controller import UserProfileController
 from notes.controller import NoteController
 # restapi
 from restapi.serializers import *
 # rest_framework
-from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
+
 
 @api_view(["POST"])
 def create_note(request):
@@ -28,9 +21,11 @@ def create_note(request):
     note_serialized = NoteSerializer(note).data
     return Response(note_serialized, content_type="application/json")
 
-def check_permissions(note,request):
+
+def check_permissions(note, request):
     allowed = (note.user.user == request.user)
     return allowed
+
 
 @api_view(["POST"])
 def create_reminder(request, pk):
@@ -48,12 +43,25 @@ def create_reminder(request, pk):
 def delete_note(request, pk):
     nh = NoteController()
     note = nh.get_note(pk)
-    if not note:
-        return Response({"error": "invalid_note_id"}, content_type="application/json")
-    if check_permissions(note, request) :
-        if nh.delete_note(pk):
-            return Response({"success": "deleted"}, content_type="application/json")
-    return Response({"error": "unknown_error"}, content_type="application/json")
+    return_value = {"error": "unknown_error"}
+    if not note or not check_permissions(note, request):
+        return_value = {"error": "invalid_note_id"}
+    elif nh.delete_note(pk):
+        return_value = {"success": "deleted"}
+    return Response(return_value, content_type="application/json")
+
+
+@api_view(["POST"])
+def complete_note(request, pk):
+    nh = NoteController()
+    note = nh.get_note(pk)
+    return_value = {"error": "unknown_error"}
+    if not note or not check_permissions(note, request):
+        return_value = {"error": "invalid_note_id"}
+    elif nh.complete_note(pk):
+        return_value = {"success": "completed"}
+    return Response(return_value, content_type="application/json")
+
 
 @api_view(["POST"])
 def update_note(request, pk):
@@ -62,7 +70,7 @@ def update_note(request, pk):
     note = nh.get_note(pk)
     if not note:
         return Response({"error": "invalid_note_id"}, content_type="application/json")
-    if check_permissions(nh.get_note(pk),request):
+    if check_permissions(nh.get_note(pk), request):
         nh.update_note(note_body, pk)
         note_serialized = NoteSerializer(note).data
         response = Response(note_serialized, content_type="application/json")

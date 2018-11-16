@@ -1,8 +1,7 @@
-import json
 from django.contrib.auth.models import User
 from users.models import Profile
-from notes.models import Note
 from restapi.serializers import NoteSerializer
+
 
 class UserProfileController:
 
@@ -32,8 +31,10 @@ class UserProfileController:
         serialized_notes = []
         returned_id = 0
         for note in notes:
-            if not note.is_deleted:
-                serialized_notes.append({str(returned_id):NoteSerializer(note).data})
+            if not note.is_deleted and not note.is_completed:
+                print(note.is_completed)
+                print(note.is_deleted)
+                serialized_notes.append({str(returned_id): NoteSerializer(note).data})
                 returned_id += 1
         return serialized_notes
 
@@ -43,6 +44,16 @@ class UserProfileController:
         returned_id = 0
         for note in notes:
             if note.is_deleted:
-                serialized_notes.append({str(returned_id):NoteSerializer(note).data})
+                serialized_notes.append({str(returned_id): NoteSerializer(note).data})
+                returned_id += 1
+        return serialized_notes
+
+    def return_user_completed_notes(self, user):
+        notes = user.profile.notes.all()
+        serialized_notes = []
+        returned_id = 0
+        for note in notes:
+            if note.is_completed:
+                serialized_notes.append({str(returned_id): NoteSerializer(note).data})
                 returned_id += 1
         return serialized_notes
